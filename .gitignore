@@ -1,0 +1,7 @@
+#agregar para ignorar el __pycache
+**/__pycache
+#agregar para ignorar los archivos de configuración
+**/*.xlsx
+**/*.db
+
+

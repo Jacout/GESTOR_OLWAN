@@ -1,4 +1,4 @@
-import modulos.mod_registro
+import modulos.mod_registro as registro
 
 if __name__ == "__main__":
     while True:
@@ -8,11 +8,13 @@ if __name__ == "__main__":
         print("1. Registrar Gasto")
         print("2. Registrar Tarea")
         print("3. Salir")
-        opcion = input("Ingrese una opción: ")
+        opcion = int(input("Ingrese una opción: "))
         if opcion == 1:
-            print("Llama al modulo de registro con la funcion de gasto")
+            #llama al modulo para registrar gasto
+            registro.reg_gasto()
         elif opcion == 2:
-            print("Llama al modulo de registro con la funcion de tarea")
+            #Llama al modulo de registro con la funcion de tarea
+            registro.reg_tarea()
         elif opcion == 3:
             break
         else:

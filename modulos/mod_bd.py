@@ -15,7 +15,8 @@ def crear_tablas():
               fecha TEXT,
               descripcion TEXT,
               monto REAL,
-              persona TEXT)''')
+              persona TEXT,
+              fecha_registro TEXT)''')
     c.execute('''CREATE TABLE IF NOT EXISTS tareas
               (id INTEGER PRIMARY KEY AUTOINCREMENT,
               titulo TEXT,
@@ -27,11 +28,11 @@ def crear_tablas():
     conn.close()
 
 #funcion para insertar datos en la tabla gastos
-def insertar_gasto(fecha, descripcion, monto, persona):
+def insertar_gasto(fecha, descripcion, monto, persona, fecha_registro):
     conn = crear_conexion()
     c = conn.cursor()
-    datos=[fecha,descripcion,monto,persona]
-    c.execute("INSERT INTO gastos (fecha, descripcion, monto, persona) VALUES (?, ?, ?, ?)",datos)
+    datos=[fecha,descripcion,monto,persona,fecha_registro]
+    c.execute("INSERT INTO gastos (fecha, descripcion, monto, persona, fecha_registro) VALUES (?, ?, ?, ?, ?)",datos)
     
     conn.commit()
     conn.close()
@@ -44,6 +45,12 @@ def insertar_tarea(titulo, descripcion, importancia, fecha_registro, fecha_venci
     datos=[titulo,descripcion,importancia,fecha_registro,fecha_vencimiento]
     c.execute("INSERT INTO tareas (titulo, descripcion, importancia, fecha_registro, fecha_vencimiento) VALUES (?,?,?,?)",datos)
 
+def consulta_general(tabla):
+    conn = crear_conexion()
+    c = conn.cursor()
+    c.execute(f"SELECT * FROM {tabla}")
+    datos = c.fetchall()
+    c.close()
+    return datos
 
 crear_tablas()
-insertar_gasto('2022-01-01', 'comida', 100, 'Juan')
