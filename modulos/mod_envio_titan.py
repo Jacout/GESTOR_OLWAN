@@ -2,14 +2,22 @@ import smtplib
 import imaplib
 import time
 from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
 from email.header import Header
 
+#si jala falta solo agregar la firma con imagen 
+
 # Email configuration
-sender_email = 'cuenta correo' 
-sender_password = 'contraseña'
-recipient_email = 'destinatario'
-subject = 'Testing email script'
-body = 'This is a test email sent from a Python script, saludos.'
+sender_email = 'correo que envia' 
+sender_password = 'contra'
+recipient_email = 'correo destinatario'
+subject = 'Propuesta'
+body = '''cuerpo'''
+
+# Archivo adjunto
+attachment_file = 'nombre del archivo falta agregar otro'
 
 # SMTP (sending) server details
 smtp_server = 'smtp.titan.email'
@@ -21,10 +29,21 @@ imap_port = 993
 
 def send_email():
     # Create the message
-    message = MIMEText(body, 'plain', 'utf-8')
+    message = MIMEMultipart()
     message['From'] = sender_email
     message['To'] = recipient_email
     message['Subject'] = Header(subject, 'utf-8')
+
+    # Agrega el cuerpo del correo electrónico
+    message.attach(MIMEText(body, 'plain', 'utf-8'))
+
+    # Agrega el archivo adjunto
+    with open(attachment_file, 'rb') as f:
+        attachment = MIMEBase('application', 'octet-stream')
+        attachment.set_payload(f.read())
+    encoders.encode_base64(attachment)
+    attachment.add_header('Content-Disposition', f'attachment; filename= {attachment_file}')
+    message.attach(attachment)
 
     try:
         # Send the email
