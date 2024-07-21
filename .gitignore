@@ -3,5 +3,8 @@
 #agregar para ignorar los archivos de configuración
 **/*.xlsx
 **/*.db
+datos.txt
+**/*.pdf
+
 
 
