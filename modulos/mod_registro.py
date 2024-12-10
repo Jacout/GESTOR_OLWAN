@@ -1,4 +1,4 @@
-import modulos.mod_bd as db
+
 from datetime import datetime
 
 #funcion para registrar gasto
@@ -22,3 +22,9 @@ def reg_tarea():
     fecha_registro = datetime.now().strftime("%d/%m/%Y")
     fecha_vencimiento = input("Ingrese la fecha del gasto (dd/mm/aaaa): ")
     db.insertar_tarea(titulo, descripcion, importancia, fecha_registro, fecha_vencimiento)
+    
+    
+    
+print("Que desea registrar")
+print("Certificaciones, Facturas, Gastos, Pagos")
+
