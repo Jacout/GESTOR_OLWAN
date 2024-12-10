@@ -5,9 +5,12 @@ if __name__ == "__main__":
         print("Registro OLWAN S.C.")
         print("Bienvenido")
         #menu para registrar un gasto o una tarea o salir
-        print("1. Registrar Gasto")
-        print("2. Registrar Tarea")
-        print("3. Salir")
+        print("1. Registro")
+        print("2. Ver")
+        print("3. Exportar")
+        print("4. Editar/Borrar")
+        
+        print("4. Salir")
         opcion = int(input("Ingrese una opción: "))
         if opcion == 1:
             #llama al modulo para registrar gasto
@@ -16,6 +19,8 @@ if __name__ == "__main__":
             #Llama al modulo de registro con la funcion de tarea
             registro.reg_tarea()
         elif opcion == 3:
+            break
+        elif opcion == 4:
             break
         else:
             print("Opción no válida, intente de nuevo")
