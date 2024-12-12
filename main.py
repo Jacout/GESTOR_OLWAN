@@ -1,5 +1,3 @@
-import modulos.mod_registro as registro
-
 if __name__ == "__main__":
     while True:
         print("Registro OLWAN S.C.")
@@ -13,14 +11,16 @@ if __name__ == "__main__":
         print("4. Salir")
         opcion = int(input("Ingrese una opción: "))
         if opcion == 1:
-            #llama al modulo para registrar gasto
-            registro.reg_gasto()
+            #llama al modulo para registro
+            import modulos.mod_registro
         elif opcion == 2:
-            #Llama al modulo de registro con la funcion de tarea
-            registro.reg_tarea()
+            #Llama al modulo para ver
+            continue
         elif opcion == 3:
-            break
+            #Llama al modulo para exportar
+            continue
         elif opcion == 4:
-            break
+            #Llama al modulo para editar/borrar
+            pass
         else:
             print("Opción no válida, intente de nuevo")
