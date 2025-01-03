@@ -26,13 +26,33 @@ def facturas_notaria():
     monto = float(input("Monto "))
     solicitado = input("¿Quien solicito?")
     bd.reg_facturas_notaria((folio_fac,concepto,concepto_not,cantidad,fecha_sol,monto,solicitado))
+
+def certificaciones():
+    print("Registro de Certificaciones")
+    ident = input("Ingrese identificacion del documento, como nombre de archivo o numero economico\n")
+    canti_cer = int(input("Cantidad de certificaciones\n"))
+    hojas = int(input("Tiene hojas extra el documento? 1.Si 2.No \n"))
+    costo = 225
+    if hojas == 1:
+        hojas_extra = int(input("¿Cuantas hojas tiene extra?"))
+        costo = costo + (10 * hojas_extra)
+    subtotal = costo * canti_cer
     
+    fecha_sol = input("Ingrese la fecha que se solicito formato YYYY-MM-DD\n")
+    #obtener de la fecha sol el mes
+    mes_sol = int(fecha_sol[5:7])
+    
+    cliente = int(input("Ingrese el ID del cliente a quien se certifico"))
+    bd.registro_certificaciones((ident,canti_cer,subtotal,fecha_sol,mes_sol,cliente))
+        
+    
+
 def menu():    
     print("Que desea registrar")
     print("1.Certificaciones 2. Facturas 3. Gastos 4. Pagos")
     op = int(input("Ingrese la opcion"))
     if op == 1:
-        pass
+        certificaciones()
     elif op == 2:
         facturas_notaria()
     elif op == 3:

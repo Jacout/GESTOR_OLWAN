@@ -20,8 +20,9 @@ with open("correos.txt","r") as f:
 # Email configuration
 sender_email = lineas[0]#'correo que envia' 
 sender_password = lineas[1] #'contra'
-subject = 'PROPUESTA SERVICIOS LEGALES'
-copiao_email = 'olwan_it@outlook.com' #copia oculta preferentemente olwan it o contacto
+subject = 'PROPUESTA OLWAN S.C. SERVICIOS LEGALES'
+copiao_email = 'contacto@olwan.com.mx' #copia oculta preferentemente olwan it o contacto
+copiao_email2 = 'olwan_it@outlook.com'
 
 
 # SMTP (sending) server details
@@ -48,7 +49,6 @@ def send_email():
     message = MIMEMultipart('alternative')
     message['From'] = sender_email
     message['To'] = recipient_email
-    message['BCC'] = copiao_email
     message['Subject'] = Header(subject, 'utf-8')
 
     # Agrega el cuerpo del correo electrónico y la firma como una sola parte de texto HTML
@@ -104,7 +104,7 @@ def send_email():
         smtp_obj = smtplib.SMTP(smtp_server, smtp_port)
         smtp_obj.starttls()
         smtp_obj.login(sender_email, sender_password)
-        smtp_obj.sendmail(sender_email, [recipient_email, copiao_email], message.as_string())
+        smtp_obj.sendmail(sender_email, [recipient_email, ' ', copiao_email, ' ' ,copiao_email2], message.as_string())
         smtp_obj.quit()
         print('Email sent successfully.')
 
@@ -119,7 +119,16 @@ def send_email():
     except imaplib.IMAP4.error as e:
         print('Error appending email to "Sent" folder:', str(e))
 
-for destinatario in destinatarios():
+
+for destinatario in destinatarios:
     recipient_email = destinatario#correo destinatario
     # Call the function to send the email and append it to the "Sent" folder
     send_email()
+    print(f"enviado a {destinatario}")
+    if os.path.exists("correos_enviados_5agosto2.txt"):
+        with open("correos_enviados_5agosto2.txt", "a") as archivo:
+            archivo.write(f"enviado a {destinatario}")
+    else:
+        with open("correos_enviados_5agosto2.txt", "w") as archivo:
+            archivo.write(f"enviado a {destinatario}")
+    time.sleep(60)

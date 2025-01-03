@@ -5,7 +5,7 @@ import datetime
 class interc():
     def __init__(mismo): #inicializa la conexion
         try:
-            mismo.conn = sqlite3.connect('OLWAN_SERVICES.db')
+            mismo.conn = sqlite3.connect('data/OLWAN_SERVICES.db')
         except sqlite3.Error as e:
             print("Error")
             with open(f"log_{datetime.now().strftime("%d/%m/%Y")}.txt","w") as f:
@@ -43,7 +43,19 @@ class interc():
             mismo.conn.commit()
             print("Gasto registrado con exito")
         mismo.conn.close()
-        
+    
+    def registro_certificaciones(mismo,datos:tuple):
+        mismo.__init__()
+        mismo.cursor = mismo.conn.cursor()
+        sentencia = """insert into certificaciones_2025 (identificacion,can_certi,costo,fe_solicitado,mes,cliente)
+                    values(?,?,?,?,?,?);"""
+        if sqlite3.complete_statement(sentencia) == True:
+            mismo.cursor.execute(sentencia,datos)
+            mismo.conn.commit()
+            print("Se guardo la informacion correctamente")
+        mismo.conn.close()
+
+
 #incializar la clase
 #cone = interc()
 
