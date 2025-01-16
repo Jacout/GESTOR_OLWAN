@@ -1,4 +1,5 @@
 import modulos.mod_registro as registro
+import modulos.mod_expor as exportar
 if __name__ == "__main__":
     while True:
         print("Registro OLWAN S.C.")
@@ -18,8 +19,7 @@ if __name__ == "__main__":
             #Llama al modulo para ver
             break
         elif opcion == 3:
-            #Llama al modulo para exportar
-            break
+            exportar.menu_exportar()
         elif opcion == 4:
             #Llama al modulo para editar/borrar
             break

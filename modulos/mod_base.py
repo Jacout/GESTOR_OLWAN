@@ -3,58 +3,67 @@ import datetime
 
 #clase para realizar tareas de base de datos
 class interc():
-    def __init__(mismo): #inicializa la conexion
+    def __init__(self): #inicializa la conexion
         try:
-            mismo.conn = sqlite3.connect('data/OLWAN_SERVICES.db')
+            self.conn = sqlite3.connect('data/OLWAN_SERVICES.db')
         except sqlite3.Error as e:
             print("Error")
             with open(f"log_{datetime.now().strftime("%d/%m/%Y")}.txt","w") as f:
                 f.write(str(e))
         
     #consultar el nombre de las tablas con sqlimaster
-    def consulta_tablas(mismo):
-        mismo.__init__()
-        mismo.cursor = mismo.conn.cursor()
-        for a in mismo.cursor.execute("SELECT name FROM sqlite_master WHERE type = 'table';"):
-            print(a[0])
-        tablas = mismo.cursor.fetchall()
-        mismo.conn.close()
+    def consulta_tablas(self):
+        self.__init__()
+        self.cursor = self.conn.cursor()
+        tablas = list()
+        for a in self.cursor.execute("SELECT name FROM sqlite_master WHERE type = 'table';"):
+            if 'sqlite' in a[0]:
+                continue
+            else:
+                tablas.append(a[0])
+        self.conn.close()
         return tablas
     
     #registro de facturas notaria si guarda
-    def reg_facturas_notaria(mismo,datos:tuple):
-        mismo.__init__()
-        mismo.cursor = mismo.conn.cursor()
+    def reg_facturas_notaria(self,datos:tuple):
+        self.__init__()
+        self.cursor = self.conn.cursor()
         sentencia = """insert into certificaciones_pagos (folio_factura,concepto,concepto_notaria,cantidad,fecha_solicitado,monto,solicitado) 
         values(?,?,?,?,date(?),?,?);
         """
         if sqlite3.complete_statement(sentencia) == True:
-            mismo.cursor.execute(sentencia,datos)
-            mismo.conn.commit()
+            self.cursor.execute(sentencia,datos)
+            self.conn.commit()
             print("Se guardo la informacion correctamente")
-        mismo.conn.close()
+        self.conn.close()
         
-    def registro_gastos(mismo,datos:tuple):
-        mismo.__init__()
-        mismo.cursor = mismo.conn.cursor()
+    def registro_gastos(self,datos:tuple):
+        self.__init__()
+        self.cursor = self.conn.cursor()
         sentencia = "insert into gastos (concepto,monto,fecha,fecha_registro,realiza) values(?,?,date(?),date(?),?);"
         if sqlite3.complete_statement(sentencia) == True:
-            mismo.cursor.execute(sentencia,datos)
-            mismo.conn.commit()
+            self.cursor.execute(sentencia,datos)
+            self.conn.commit()
             print("Gasto registrado con exito")
-        mismo.conn.close()
+        self.conn.close()
     
-    def registro_certificaciones(mismo,datos:tuple):
-        mismo.__init__()
-        mismo.cursor = mismo.conn.cursor()
+    def registro_certificaciones(self,datos:tuple):
+        self.__init__()
+        self.cursor = self.conn.cursor()
         sentencia = """insert into certificaciones_2025 (identificacion,can_certi,costo,fe_solicitado,mes,cliente)
                     values(?,?,?,?,?,?);"""
         if sqlite3.complete_statement(sentencia) == True:
-            mismo.cursor.execute(sentencia,datos)
-            mismo.conn.commit()
+            self.cursor.execute(sentencia,datos)
+            self.conn.commit()
             print("Se guardo la informacion correctamente")
-        mismo.conn.close()
+        self.conn.close()
 
+    def tabla(self,tabla):
+        self.__init__()
+        self.cursor = self.conn.cursor()
+        self.cursor.execute(f"SELECT * FROM {tabla}")
+        return self.cursor.fetchall()
+        
 
 #incializar la clase
 #cone = interc()
